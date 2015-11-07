@@ -2,8 +2,9 @@
 public class Cram_env {
 	
 	public static void main(String[] args) {
-		int [][] board = {{0,0,0},{1,1,0},{0,0,0}};
+		int [][] board = {{1,1,0},{0,0,0},{0,0,0}};
 		String [] moves;
+		
 		int count = 0;
 		for(int i=0; i < 3; i++)
 		{
@@ -15,14 +16,41 @@ public class Cram_env {
 			System.out.println("");
 		}
 		
+		
 		//System.out.println(board[1][1]);
 		moves = findMoves(board);
+		
+		int wins[] = new int[42];
 		
 		while(moves[count] != null)
 		{
 			System.out.println(moves[count]);
+			
+			
+		
+			board[(int)moves[count].charAt(0) -48][(int)moves[count].charAt(1)-48] = 1;
+			board[moves[count].charAt(2) - 48][moves[count].charAt(3) - 48] = 1;
+			wins[count] = calculateWins(board,true);
+			board[(int)moves[count].charAt(0) -48][(int)moves[count].charAt(1)-48] = 0;
+			board[moves[count].charAt(2) - 48][moves[count].charAt(3) - 48] = 0;
+			
+			//System.out.println("Wins for move: " + count + " = " + wins[count]);
 			count++;
 		}
+		int max = 0;
+		int indexMax = 0;
+		for(int i = 0; i < count; i++){
+			System.out.println(wins[i]);
+			if (wins[i] > max){
+				indexMax = i;
+				//System.out.println("max index " + indexMax);
+			}
+			
+		}
+		
+		System.out.println("move : " + moves[indexMax]);
+		
+		
 
 
 	}
@@ -74,8 +102,65 @@ public class Cram_env {
 		return totalMoves;
 	}
 	
-	public int calculateWins(int [][] newBoard){
-		return 0;
+	public static int calculateWins(int [][] newBoard,boolean turn){
+		
+		int wins = 0;
+		String [] moves = findMoves(newBoard);
+		
+		for(int i=0; i < 3; i++)
+		{
+			for(int j =0; j<3; j++)
+			{
+				System.out.print(" "+ newBoard[i][j]);
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+		
+	
+		
+		int i = 0;
+		while(moves[i] != null){
+			//System.out.println(moves[i]);
+			i++;
+		}
+	
+		if(i == 0){
+			//System.out.println(turn);
+	
+			if(turn){
+				//System.out.println("we win");
+				return 1;
+			}
+			else{
+				//System.out.println("we loose");
+				return 0;
+			}
+		}
+		
+		
+		if(turn == false){
+			turn = true;
+		}
+		else
+			turn = false;
+		
+
+		
+		int index = 0;
+		 
+		while(moves[index] != null){
+			//System.out.println("got in the while loop of calculate moves");
+			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 1;
+			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 1;
+			wins += calculateWins (newBoard,turn);
+			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 0;
+			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 0;
+			index++;
+		}
+		//System.out.println("Retunring wins:  " + wins);
+	
+		return wins;	
 	}
 	
 	
