@@ -49,13 +49,15 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    int loss[] = new int[42];
 
    //Checks to see if there are anymore moves left in the array
+  	System.out.println("All Moves:");
    while(moves[k]!= null)
    {
    	System.out.println(moves[k]);
    	k++;
 
    }
-   System.out.println(k);
+
+   System.out.println("Total number of moves: " +k);
 
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
@@ -69,10 +71,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    //While there are still moves to check this while loop will keep on executing
    while(moves[count] != null)
    {
-   	System.out.println(moves[count]);
-
-
-   	System.out.println("Move: " + moves[count]);
+   	System.out.println("Analysis Move: " + moves[count]);
 
    	//Sets one of the possible moves in the moves array equal to 1 (meaning the spot can no longer be played in)
    	board[(int)moves[count].charAt(0) -48][(int)moves[count].charAt(1)-48] = 1;
@@ -87,7 +86,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    	board[moves[count].charAt(2) - 48][moves[count].charAt(3) - 48] = 0;
 
 			//System.out.println("loss for move: " + count + " = " + loss[count]);
-   	System.out.println("Move: " + moves[count]);
+   	System.out.println("Number of Losses for this Move: " + loss[count]+"\n");
 
    	//Increases the counter so next time in the while loop we can check the next possible move in the array and pass the new board into calculateLoss
    	count++;
@@ -97,11 +96,9 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    int min = loss[0];
    int indexMin = 0;
    for(int i = 0; i < count; i++){
-   	System.out.println(loss[i]);
    	if (loss[i] <= min){
    		min = loss[i];
    		indexMin = i;
-				//System.out.println("max index " + indexMax);
    	}
 
    }
@@ -132,11 +129,13 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 			i++;
 		}
 
-		//If there are no moves in the array
+		//If there are no moves in the array enter the if statement
 		if(i == 0){
+			//If we are not the last people to play then return 1 (which in this case repersents a loss)
 			if(!turn){
 				return 1;
 			}
+			//If we were the last one to play then return 0
 			else{
 				return 0;
 			}
