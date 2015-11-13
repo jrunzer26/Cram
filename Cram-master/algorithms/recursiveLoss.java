@@ -93,11 +93,19 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    }
 
 
+   //Intializes min to the first value in the loss array
    int min = loss[0];
+   //Sets the index to the first value in the loss array
    int indexMin = 0;
+
+   //Runs though this for loop for the total number of moves in the move array
    for(int i = 0; i < count; i++){
+
+   	//Checks to see if the loss value in the array is less then the min loss value
    	if (loss[i] <= min){
+   		//If it is it sets the new minimum loss value to the min value
    		min = loss[i];
+   		//Stores the index of the loss array so we can later call it to play the move from the moves array
    		indexMin = i;
    	}
 
@@ -141,7 +149,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 			}
 		}
 		
-		
+		//Switching turns
 		if(turn == false){
 			turn = true;
 		}
@@ -152,6 +160,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 		
 		int index = 0;
 
+		//Same while loop as before, we start recursion, by passing in the next moved to be played on the board we passed into the calculateLoss function
 		while(moves[index] != null){
 			//System.out.println("got in the while loop of calculate moves");
 			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 1;
@@ -161,11 +170,14 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 0;
 			index++;
 		}
-		//System.out.println("Retunring loss:  " + loss);
-
+		//After you play through the whole game with the first move you sent in, it will return the amount of times you could lose with the move
 		return loss;	
 	}
 	
+	/* 
+	 *
+	 *
+	 */
 	public static String [] findMoves(int [][] newBoard){
 		String previous = null;
 		String current = null;
