@@ -64,7 +64,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
-   if(k > 0)
+   if(k > 24)
    {
    	String bestMove = moves[0];
    	int bestMoveCount = k+1;
@@ -72,7 +72,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    	for(int i =0; i < k; i++)
    	{
    		int j=0;
-      int bestCurrent = k+1;
+      
    		
    		board[(int)moves[i].charAt(0) -48][(int)moves[i].charAt(1)-48] = 1;
    		board[moves[i].charAt(2) - 48][moves[i].charAt(3) - 48] = 1;
@@ -85,12 +85,12 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    		{
    			//System.out.print(" "+j);
    			j++;
-        bestCurrent++;
+       
    		}
-   		if(bestMoveCount < bestMoveCount)
+   		if(j < bestMoveCount && j > 0)
    		{
-   			bestMoveCount = bestCurrent;
-   			bestMove = holder[i];   		
+   			bestMoveCount = j;
+   			bestMove = moves[i];   		
    			System.out.println("The number of moves in this board are: "+bestMove);
    		}
 
