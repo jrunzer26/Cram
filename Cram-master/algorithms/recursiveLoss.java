@@ -47,6 +47,8 @@ public class recursiveLoss extends Algo{ // Replace TeamName
 
    //Creates an array to store the number of losses each move will get
    int loss[] = new int[38];
+   int lowestMoves[] = new int[38];
+   
 
    //Checks to see if there are anymore moves left in the array
   	System.out.println("All Moves:");
@@ -62,10 +64,38 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
-   if(k > 27)
+   if(k > 24)
    {
+   	String bestMove = moves[0];
+   	int bestMoveCount = k+1;
+   	for(int i =0; i < k; i++)
+   	{
+   		int j=0;
+   		
+   		board[(int)moves[i].charAt(0) -48][(int)moves[i].charAt(1)-48] = 1;
+   		board[moves[i].charAt(2) - 48][moves[i].charAt(3) - 48] = 1;
+   		String [] holder = findMoves(board, k);
+   		board[(int)moves[i].charAt(0) -48][(int)moves[i].charAt(1)-48] = 0;
+   		board[moves[i].charAt(2) - 48][moves[i].charAt(3) - 48] = 0;
+   		
+
+   		while(holder[j] != null)
+   		{
+   			//System.out.print(" "+j);
+   			j++;
+   		}
+   		if(j < bestMoveCount)
+   		{
+   			bestMoveCount = j;
+   			bestMove = holder[i];   		
+   			System.out.println("The number of moves in this board are: "+bestMove);
+   		}
+
+
+   	}
+   	return bestMove;
    	//Plays the last move in the moves array
-   	return moves[k-1];
+   	//return moves[k-1];
    }
 
    //While there are still moves to check this while loop will keep on executing
