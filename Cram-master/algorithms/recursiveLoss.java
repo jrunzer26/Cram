@@ -43,7 +43,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    //--------------------------------------------------------------------------//
 		
    //Calls the function findMoves with the parameter of the current board and sends the results to the moves array
-   moves = findMoves(board);
+   moves = findMoves(board, 35);
 
    //Creates an array to store the number of losses each move will get
    int loss[] = new int[42];
@@ -79,7 +79,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
 
 
    	//Enters the calculateLoss function and passes in the board after setting the moves made above to 1 and we pass in true, which repersents it is our turn
-   	loss[count] = calculateLoss(board,true);
+   	loss[count] = calculateLoss(board,true,k);
 
    	//The move you previously set to 1 is not set back to 0 (meaning the spot can be played on)
    	board[(int)moves[count].charAt(0) -48][(int)moves[count].charAt(1)-48] = 0;
@@ -101,12 +101,21 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    //Runs though this for loop for the total number of moves in the move array
    for(int i = 0; i < count; i++){
 
+   	if(loss[i] == 0)
+   	{
+   		return moves[i];
+   	}
+
    	//Checks to see if the loss value in the array is less then the min loss value
    	if (loss[i] <= min){
-   		//If it is it sets the new minimum loss value to the min value
-   		min = loss[i];
-   		//Stores the index of the loss array so we can later call it to play the move from the moves array
-   		indexMin = i;
+
+
+   			//If it is it sets the new minimum loss value to the min value
+   			min = loss[i];
+   			//Stores the index of the loss array so we can later call it to play the move from the moves array
+   			indexMin = i;
+   	
+
    	}
 
    }
@@ -122,13 +131,13 @@ public class recursiveLoss extends Algo{ // Replace TeamName
  * The purpose of this function is it plays though every permutation of the move we passed into the board, it does this by checking to see how many losses the move we played
  * will have and then we return number of losses into the loss array at the index that corresponds to the move we just played from the moves array
  */
-public static int calculateLoss(int [][] newBoard,boolean turn){
+public static int calculateLoss(int [][] newBoard,boolean turn, int size){
 
 	//The variable for the number of losses
 	int loss = 0;
 
 	//Stores all the possible moves into the movoes array
-	String [] moves = findMoves(newBoard);
+	String [] moves = findMoves(newBoard, size);
 		
 		int i = 0;
 
@@ -165,7 +174,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 			//System.out.println("got in the while loop of calculate moves");
 			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 1;
 			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 1;
-			loss += calculateLoss (newBoard,turn);
+			loss += calculateLoss (newBoard,turn,i);
 			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 0;
 			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 0;
 			index++;
@@ -178,7 +187,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 	 *
 	 *
 	 */
-	public static String [] findMoves(int [][] newBoard){
+	public static String [] findMoves(int [][] newBoard, int size){
 		String previous = null;
 		String current = null;
 		int previousJV = 99;
@@ -186,7 +195,8 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 		int counterIndex = 0;
 
 		
-		String []totalMoves = new String[42];
+		String []totalMoves = new String[size];
+
 
 		for(int i = 0; i < (newBoard.length); i++){
 			for(int j = 0; j< (newBoard[0].length); j++){
