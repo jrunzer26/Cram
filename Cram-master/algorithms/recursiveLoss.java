@@ -43,10 +43,10 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    //--------------------------------------------------------------------------//
 		
    //Calls the function findMoves with the parameter of the current board and sends the results to the moves array
-   moves = findMoves(board, 35);
+   moves = findMoves(board, 38);
 
    //Creates an array to store the number of losses each move will get
-   int loss[] = new int[42];
+   int loss[] = new int[38];
 
    //Checks to see if there are anymore moves left in the array
   	System.out.println("All Moves:");
@@ -62,7 +62,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
-   if(k > 24)
+   if(k > 27)
    {
    	//Plays the last move in the moves array
    	return moves[k-1];
@@ -110,7 +110,7 @@ public class recursiveLoss extends Algo{ // Replace TeamName
    	if (loss[i] <= min){
 
 
-   			//If it is it sets the new minimum loss value to the min value
+   			//If it is i/t sets the new minimum loss value to the min value
    			min = loss[i];
    			//Stores the index of the loss array so we can later call it to play the move from the moves array
    			indexMin = i;
@@ -139,15 +139,15 @@ public static int calculateLoss(int [][] newBoard,boolean turn, int size){
 	//Stores all the possible moves into the movoes array
 	String [] moves = findMoves(newBoard, size);
 		
-		int i = 0;
+		//int i = 0;
 
 		//If there are still moves to be played increase the value of i by one
-		while(moves[i] != null){
+		/*while(moves[i] != null){
 			i++;
-		}
+		}*/
 
 		//If there are no moves in the array enter the if statement
-		if(i == 0){
+		if(moves[0] == null){
 			//If we are not the last people to play then return 1 (which in this case repersents a loss)
 			if(!turn){
 				return 1;
@@ -174,7 +174,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn, int size){
 			//System.out.println("got in the while loop of calculate moves");
 			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 1;
 			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 1;
-			loss += calculateLoss (newBoard,turn,i);
+			loss += calculateLoss (newBoard,turn,size-1);
 			newBoard[moves[index].charAt(0) - 48][moves[index].charAt(1) - 48] = 0;
 			newBoard[moves[index].charAt(2) -48][moves[index].charAt(3) - 48] = 0;
 			index++;
