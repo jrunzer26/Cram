@@ -1,7 +1,6 @@
 package algorithms;
 import org.gamelink.game.Cram;
 import org.gamelink.game.Algo;
-import java.util.Scanner;
 
 public class recursiveLoss extends Algo{ // Replace TeamName
     private static String teamName = "recursiveLoss"; // Replace TeamName
@@ -233,7 +232,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn, int size){
 
 		for(int i = 0; i < (newBoard.length); i++){
 			for(int j = 0; j< (newBoard[0].length); j++){
-				if((newBoard[j][i] != 1) && (newBoard[j][i] != 2) && (newBoard[j][i] != 99)){
+				if(newBoard[j][i] == 0){
 					current = Integer.toString(j) + Integer.toString(i);
 					if((previous != null) && (j-previousJV == 1) ){
 						totalMoves[counterIndex] = previous + current;
@@ -250,7 +249,7 @@ public static int calculateLoss(int [][] newBoard,boolean turn, int size){
 		
 		for(int i = 0; i < (newBoard.length); i++){
 			for(int j = 0; j< (newBoard[0].length); j++){
-				if((newBoard[i][j] != 1) && (newBoard[i][j] != 2) && (newBoard[i][j] != 99)){
+				if(newBoard[i][j] == 0){
 					current = Integer.toString(i) + Integer.toString(j);
 					if((previous != null) && (j-previousJH == 1) ){
 						totalMoves[counterIndex] = previous + current;
