@@ -65,7 +65,7 @@ public class arrayList extends Algo{ // Replace TeamName
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
-   if(k > 24  || ((board.length > 5 || board[0].length > 5 ) && k > 15))
+   if(k > 24  || ((board.length + board[0].length > 10 ) && k > 6))
    {
    	String bestMove = moves.get(0);
    	int bestMoveCount = k+1;
