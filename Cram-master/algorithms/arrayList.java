@@ -48,7 +48,6 @@ public class arrayList extends Algo{ // Replace TeamName
 
    //Creates an array to store the number of losses each move will get
    ArrayList<Integer> loss = new ArrayList<Integer>();
-   ArrayList<Integer> lowestMoves = new ArrayList<Integer>();
    
 
    //Checks to see if there are anymore moves left in the array
@@ -66,7 +65,7 @@ public class arrayList extends Algo{ // Replace TeamName
    /*We will only run our algorithm if there are less then 24 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
-   if(k > 24  || board.length > 5)
+   if(k > 24  || ((board.length > 5 || board[0].length > 5 ) && k > 15))
    {
    	String bestMove = moves.get(0);
    	int bestMoveCount = k+1;
@@ -83,18 +82,18 @@ public class arrayList extends Algo{ // Replace TeamName
    		board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 0;
    		
 
-   		while(holder.size() > j )
-   		{
-   			//System.out.print(" "+j);
-   			j++;
-       
-   		}
-   		if(j < bestMoveCount && j > 0)
-   		{
-   			bestMoveCount = j;
-   			bestMove = moves.get(i);   		
-   			System.out.println("The number of moves in this board are: "+bestMove);
-   		}
+     		while(holder.size() > j )
+     		{
+     			//System.out.print(" "+j);
+     			j++;
+         
+     		}
+     		if(j < bestMoveCount && j > 0)
+     		{
+     			bestMoveCount = j;
+     			bestMove = moves.get(i);   		
+     			System.out.println("The number of moves in this board are: "+bestMove);
+     		}
 
 
    	}
@@ -233,8 +232,8 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
     ArrayList<String> totalMoves = new ArrayList<String>();
 
 
-		for(int i = 0; i < (newBoard.length); i++){
-			for(int j = 0; j< (newBoard[0].length); j++){
+		for(int i = 0; i < (newBoard[0].length); i++){
+			for(int j = 0; j< (newBoard.length); j++){
 				if(newBoard[j][i] == 0){
 					current = Integer.toString(j) + Integer.toString(i);
 					if((previous != null) && (j-previousJV == 1) ){
