@@ -32,16 +32,6 @@ public class arrayList extends Algo { // Replace TeamName
     int count = 0;
     int k = 0;
 
-    // --------------------------------------------------------------------------//
-    for (int i = 0; i < (board.length); i++) {
-
-      for (int j = 0; j < (board[0].length); j++) {
-        System.out.print(" " + board[i][j]);
-      }
-      System.out.println("");
-    }
-    // --------------------------------------------------------------------------//
-
     // Calls the function findMoves with the parameter of the current board
     // and sends the results to the moves array
     moves = findMoves(board);
@@ -50,15 +40,8 @@ public class arrayList extends Algo { // Replace TeamName
     ArrayList<Integer> loss = new ArrayList<Integer>();
 
     // Checks to see if there are anymore moves left in the array
-    System.out.println("All Moves:");
-
-    while (k < moves.size()) {
-      System.out.println(moves.get(k));
-      k++;
-
-    }
-
-    System.out.println("Total number of moves: " + k);
+    System.out.println("\n");
+    System.out.println("Number of moves: "+moves.size());
 
     /*
      * We will only run our algorithm if there are less then 21 possible
@@ -67,41 +50,40 @@ public class arrayList extends Algo { // Replace TeamName
      * of moves is greater then 24
      */
     int sum = board.length + board[0].length;
-    if (k > 21 || ((sum > 10) && (k >= -1 * sum + 30))) {
+    if (moves.size() > 21 || ((sum > 10) && (moves.size() >= -1 * sum + 30))) {
       String bestMove = moves.get(0);
-      int bestMoveCount = k + 1;
+      int bestMoveCount = moves.size();
 
       // Runs for the number of totalMoves in the board
-      for (int i = 0; i < k; i++) {
-        int j = 0;
+      for (int i = 0; i < moves.size(); i++) {
+        
 
         // The purpose of this sesction of code is the play a move and
         // then after that move has been played check to see how many
         // moves are then playable after making your move
         // So the whole point is to reduce the number of moves in the
         // board
-        board[(int) moves.get(i).charAt(0) - 48][(int) moves.get(i)
+        board[moves.get(i).charAt(0) - 48][moves.get(i)
             .charAt(1) - 48] = 1;
         board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 1;
         ArrayList<String> holder = findMoves(board);
-        board[(int) moves.get(i).charAt(0) - 48][(int) moves.get(i)
+        board[moves.get(i).charAt(0) - 48][moves.get(i)
             .charAt(1) - 48] = 0;
         board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 0;
 
+        int size =0;
         // Increases j to the number of moves after you played your move
-        while (holder.size() > j) {
-          j++;
-        }
+        size = holder.size();
         // If the number of moves is less then the bestMoveCount and j
         // is greater then 0 enter the if statement
-        if (j < bestMoveCount && j > 0) {
+        if (size < bestMoveCount && size > 0) {
           // Update the bestMoveCount to the new value j
-          bestMoveCount = j;
+          bestMoveCount = size;
           // Set the move to play to the index you just check from the
           // moves arrayList
-          bestMove = moves.get(i);
+          bestMove = moves.get(size);
           System.out
-              .println("The number of moves in this board are: "
+              .println("Thikning about this move: "
                   + bestMove);
         }
 
@@ -113,12 +95,13 @@ public class arrayList extends Algo { // Replace TeamName
 
     // While there are still moves to check this while loop will keep on
     // executing
+    
     while (moves.size() > count) {
       System.out.println("Analysis Move: " + moves.get(count));
 
       // Sets one of the possible moves in the moves array equal to 1
       // (meaning the spot can no longer be played in)
-      board[(int) moves.get(count).charAt(0) - 48][(int) moves.get(count)
+      board[moves.get(count).charAt(0) - 48][moves.get(count)
           .charAt(1) - 48] = 1;
       board[moves.get(count).charAt(2) - 48][moves.get(count).charAt(3) - 48] = 1;
 
@@ -129,14 +112,12 @@ public class arrayList extends Algo { // Replace TeamName
 
       // The move you previously set to 1 is not set back to 0 (meaning
       // the spot can be played on)
-      board[(int) moves.get(count).charAt(0) - 48][(int) moves.get(count)
+      board[moves.get(count).charAt(0) - 48][moves.get(count)
           .charAt(1) - 48] = 0;
       board[moves.get(count).charAt(2) - 48][moves.get(count).charAt(3) - 48] = 0;
 
-      // System.out.println("loss for move: " + count + " = " +
-      // loss[count]);
       System.out.println("Number of Losses for this Move: "
-          + loss.get(count) + "\n");
+       + loss.get(count) + "\n");
 
       // Increases the counter so next time in the while loop we can check
       // the next possible move in the array and pass the new board into
@@ -172,6 +153,7 @@ public class arrayList extends Algo { // Replace TeamName
     }
 
     // Plays the move with the fewest losses
+
     return moves.get(indexMin);
 
   }
