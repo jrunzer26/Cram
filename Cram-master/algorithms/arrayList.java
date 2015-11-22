@@ -30,7 +30,6 @@ public class arrayList extends Algo { // Replace TeamName
 
     // Initalize variables
     int count = 0;
-    int k = 0;
 
     // Calls the function findMoves with the parameter of the current board
     // and sends the results to the moves array
@@ -40,8 +39,7 @@ public class arrayList extends Algo { // Replace TeamName
     ArrayList<Integer> loss = new ArrayList<Integer>();
 
     // Checks to see if there are anymore moves left in the array
-    System.out.println("\n");
-    System.out.println("Number of moves: "+moves.size());
+    System.out.println("\n\nNumber of moves: " + moves.size());
 
     /*
      * We will only run our algorithm if there are less then 21 possible
@@ -71,9 +69,7 @@ public class arrayList extends Algo { // Replace TeamName
             .charAt(1) - 48] = 0;
         board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 0;
 
-        int size =0;
-        // Increases j to the number of moves after you played your move
-        size = holder.size();
+        int size = holder.size();
         // If the number of moves is less then the bestMoveCount and j
         // is greater then 0 enter the if statement
         if (size < bestMoveCount && size > 0) {
@@ -224,8 +220,12 @@ public class arrayList extends Algo { // Replace TeamName
   }
 
   /* 
-   *
-   *
+   * Finds all possible moves for the board.
+   * It finds all the possible moves by going vertically through the board,
+   * and findings two adjacent open blocks, then appends those locations together
+   * and adds them to the list to be returned
+   * newBoard - the board to find all the moves on
+   * returns - a String array list of all the possible moves
    */
   public static ArrayList<String> findMoves(int[][] newBoard) {
 
