@@ -24,7 +24,7 @@ public class arrayList extends Algo{ // Replace TeamName
 
 	//We store the current board each time it is our turn
    int[][] board = game.getBoard();
-   //Create an array to store all the move that are possible in the board
+   //Create an arrayList to store all the move that are possible in the board
    ArrayList<String> moves;
 
    //Initalize variables
@@ -46,7 +46,7 @@ public class arrayList extends Algo{ // Replace TeamName
    //Calls the function findMoves with the parameter of the current board and sends the results to the moves array
    moves = findMoves(board);
 
-   //Creates an array to store the number of losses each move will get
+   //Creates an arrayList to store the number of losses each move will get
    ArrayList<Integer> loss = new ArrayList<Integer>();
    
 
@@ -62,7 +62,7 @@ public class arrayList extends Algo{ // Replace TeamName
 
    System.out.println("Total number of moves: " +k);
 
-   /*We will only run our algorithm if there are less then 24 possible moves on the board,
+   /*We will only run our algorithm if there are less then 21 possible moves on the board,
    the reason for this is becasue of the computer speed we would not be able to calculate where to play
    if the number of moves is greater then 24*/
     int sum = board.length + board[0].length;
@@ -71,11 +71,13 @@ public class arrayList extends Algo{ // Replace TeamName
    	String bestMove = moves.get(0);
    	int bestMoveCount = k+1;
 
+    //Runs for the number of totalMoves in the board
    	for(int i =0; i < k; i++)
    	{
    		int j=0;
       
-   		
+   		//The purpose of this sesction of code is the play a move and then after that move has been played check to see how many moves are then playable after making your move
+      //So the whole point is to reduce the number of moves in the board
    		board[(int)moves.get(i).charAt(0) -48][(int)moves.get(i).charAt(1)-48] = 1;
    		board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 1;
    		ArrayList<String> holder = findMoves(board);
@@ -83,24 +85,25 @@ public class arrayList extends Algo{ // Replace TeamName
    		board[moves.get(i).charAt(2) - 48][moves.get(i).charAt(3) - 48] = 0;
    		
 
+        //Increases j to the number of moves after you played your move
      		while(holder.size() > j )
      		{
-     			//System.out.print(" "+j);
-     			j++;
-         
+     			j++; 
      		}
+        //If the number of moves is less then the bestMoveCount and j is greater then 0 enter the if statement
      		if(j < bestMoveCount && j > 0)
      		{
+          //Update the bestMoveCount to the new value j
      			bestMoveCount = j;
+          //Set the move to play to the index you just check from the moves arrayList
      			bestMove = moves.get(i);   		
      			System.out.println("The number of moves in this board are: "+bestMove);
      		}
 
 
    	}
+    //Returns the move that reduces the number of moves in the board the most
    	return bestMove;
-   	//Plays the last move in the moves array
-   	//return moves[k-1];
    }
 
    //While there are still moves to check this while loop will keep on executing
@@ -223,48 +226,68 @@ public static int calculateLoss(int [][] newBoard,boolean turn){
 	 *
 	 */
 	public static ArrayList<String> findMoves(int [][] newBoard){
+
+    //Declare Variables
 		String previous = null;
 		String current = null;
 		int previousJV = 99;
 		int previousJH = 99;
 		int counterIndex = 0;
 
-		
+		//Create an ArrayList of total moves in the board
     ArrayList<String> totalMoves = new ArrayList<String>();
 
 
+    //First for loop runs for the width of the board
 		for(int i = 0; i < (newBoard[0].length); i++){
+      //Second loop runs for the height of the board
 			for(int j = 0; j< (newBoard.length); j++){
+        //Checks to see if the spot on the board has not been played on
 				if(newBoard[j][i] == 0){
+          //Converts the string of the board postion into a number and stores it into current variable
 					current = Integer.toString(j) + Integer.toString(i);
+          //Checks to see if the last position on the board was able to be played on
 					if((previous != null) && (j-previousJV == 1) ){
+            //stores the move into the arrayList totalMoves
 						totalMoves.add(previous + current);
 					}
 				}
+        //If the spot on the board is not playable 
 				else{
 					current = null;
 				}
+        //Sets previous to the current value whether it be null on the position on the board it just checked
 				previous = current;
+        //Sets the previousJV value to j
 				previousJV = j;
 			}
 		}
 		
+    //First for loop runs for the height of the board
 		for(int i = 0; i < (newBoard.length); i++){
+      //Second for loop runs for the width of the board
 			for(int j = 0; j< (newBoard[0].length); j++){
+        //Checks to see if the spot on the board has not been played
 				if(newBoard[i][j] == 0){
+          //Converts the string of the board postion into a number and stores it into current variable
 					current = Integer.toString(i) + Integer.toString(j);
+          //Checks to see if the last position on the board was able to be played on
 					if((previous != null) && (j-previousJH == 1) ){
+            //Stores the move into the arrayList totalMoves
 					   totalMoves.add(previous + current);
 					}
 				}
+        //If the spot on the board is not playable
 				else{
 					current = null;
 				}
+        //Sets previous to the current value whether it be null on the position on the board it just checked
 				previous = current;
+        //Sets the previousJH value to j
 				previousJH = j;
 			}
 		}
-		//System.out.println("Total moves: " + counterIndex);
+		//Returns the totalMoves arrayList
 		return totalMoves;
 	}
 	
