@@ -11,8 +11,8 @@ import org.gamelink.game.Cram;
 import org.gamelink.game.Algo;
 import java.util.ArrayList;
 
-public class arrayList extends Algo { // Replace TeamName
-  private static String teamName = "recursiveLoss"; // Replace TeamName
+public class JasonStuart extends Algo { // Replace TeamName
+  private static String teamName = "JasonStuart"; // Replace TeamName
 
   public static String getTeamName() {
     return teamName;
@@ -20,7 +20,7 @@ public class arrayList extends Algo { // Replace TeamName
 
   public static void main(String[] args) {
     Cram game = new Cram(false);
-    game.startGame(arrayList.class); // Replace TeamName
+    game.startGame(JasonStuart.class); // Replace TeamName
   }
 
   public static String algorithm(Cram game) {
